@@ -1,13 +1,14 @@
 #pragma once
 #include <string>
 
+
 namespace AirlineReservationSystem {
 	class User
 	{
 	public:
 		User() = default;
 		User(const std::string& fisrtName,
-			const std::string& lastName);
+			const std::string& lastName, const int idNumber);
 
 		void addUser();
 		void removeUser();
@@ -21,12 +22,16 @@ namespace AirlineReservationSystem {
 		void setLastName(const std::string& lastName);
 		const std::string& getLastName() const;
 
-		void setIdNumber(int employeeNumber);
+		void setIdNumber(int idNumber);
 		int getIdNumber() const;
+
+		void setSeatNumber(int seatNumber);
+		int getSeatNumber() const;
 
 	private:
 		std::string mFirstName;
 		std::string mLastName;
-		int idNumber = -1;
+		int mIdNumber = -1;
+		int mSeatNumber = -1;
 	};
 }

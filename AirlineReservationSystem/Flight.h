@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <ctime>
+#include <algorithm>
 #include "User.h"
 
 namespace AirlineReservationSystem {
@@ -9,33 +9,31 @@ namespace AirlineReservationSystem {
 	{
 	public:
 		Flight() = default;
-		Flight(const std::string& destinationCity, const std::string& departureCity);
-
-		void addFlight();
-		void removeFlight();
-		void delayFlight();
-		void display() const;
+		Flight(const std::string& destinationCity, const std::string& departureCity, int flightNumber, int seatsAmount);
 
 		//Getters and setters
-		void setDestination(const std::string& destination);
-		const std::string& getDestination() const;
+		const std::string& getDestinationCity() const;
 
-		void setLastName(const std::string& lastName);
-		const std::string& getLastName() const;
+		const std::string& getDepartureCity() const;
 
-		void setFlightNumber(int flightNumber);
 		int getFlightNumber() const;
 
-		bool isHired() const;
+		vector<int>& getFreeSeats();
 
+		void reserveSeat(User& user) {
+			users.push_back(user);
+			int seatNumber = user.getSeatNumber();
+			freeSeats.erase(std::remove(freeSeats.begin(), freeSeats.end(), seatNumber), freeSeats.end());
+		}
 	private:
 		std::string mDestinationCity;
 		std::string mDepartureCity;
-		std::vector<User> seats;
+		std::vector<User> users;
+		std::vector<int> freeSeats;
 		int mFlightNumber = -1;
-		std::string mDepartureTime;
-		std::string mDuration;
+		time_t mDepartureTime;
+		//difftime mFlightDuration;
 		int differenceInTimeWithDestination = 0;
-		bool mArriving = false;
+		bool mOnTime = true;
 	};
 }
