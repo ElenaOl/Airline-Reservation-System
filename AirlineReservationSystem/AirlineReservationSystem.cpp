@@ -15,7 +15,6 @@
 //
 //6. Exit the program
 
-#include "pch.h"
 #include <iostream>
 #include "Database.h"
 
@@ -27,6 +26,7 @@ void reserveSeat(Database& db);
 void presentFlightsSchedule(Database& db);
 void displayPassengerInfo(Database& db);
 void displayFlightInfo(Database& db);
+void userTicketInfomation(Database& db);
 Flight chooseFlight(Database& db);
 
 
@@ -60,7 +60,7 @@ int main()
 			displayFlightInfo(airlineDB);
 			break;
 		case 5:
-			displayPassengerInfo(airlineDB);
+			userTicketInfomation(airlineDB);
 			break;
 		default:
 			cerr << "Unknown command." << endl;
@@ -95,23 +95,40 @@ int displayMenu()
 void presentFlightsSchedule(Database& db) {
 	auto allFlights = db.getAllFlight();
 	for (Flight f : allFlights) {
-		cout << f.getFlightNumber() << ". from " << f.getDepartureCity() << " to " << f.getDestinationCity() <<endl;;
+		f.display();
 	}
 }
 
-
-void reserveSeat(Database& db, User user)
-{
+Flight chooseFlight(Database& db) {
 	presentFlightsSchedule(db);
 	int flightId;
-	int chosenSeat;
+	cout << "Choose FlightId " << endl;;
+	cin >> flightId;
+	Flight flight = db.getFlight(flightId);
+	return flight;
+}
+
+User getUserData() {
 	string firstName;
 	string lastName;
 	int userId;
-	cout << "Choose FlightId " << endl;;
-	cin >> flightId;
+	cout << "Your First name? ";
+	cin >> firstName;
+	cout << "Last name? ";
+	cin >> lastName;
+	cout << "Your Id number? ";
+	cin >> userId;
+	
+	User user = new User(firstName, lastName, userId);
+	return user;
+}
+void reserveSeat(Database& db)
+{
+	presentFlightsSchedule(db);
+	int chosenSeat;
+	
 
-	Flight flight = db.getFlight(flightId);
+	Flight flight = chooseFlight(db);
 	vector<int> freeSeats = flight.getFreeSeats();
 	for (int seat : freeSeats) {
 		cout << seat << " " ;
@@ -119,24 +136,55 @@ void reserveSeat(Database& db, User user)
 	cout << endl << "Choose Your Seat " << endl;
 	cin >> chosenSeat;
 
-	// get user data
-	cout << "Your First name? ";
-	cin >> firstName;
-	cout << "Last name? ";
-	cin >> lastName;
-	cout << "Your Id number? ";
-	cin >> userId;
-	User *user = new User(firstName, lastName, userId);
+	User user = getUserData();
 	user.setSeatNumber(chosenSeat);
 	flight.reserveSeat(user);
-
-	
 }
 
-void presentFlightSchedule(Database& db)
-{
-	
+void displayPassengerInfo(Database& db) {
+	presentFlightsSchedule(db);
+	Flight flight = chooseFlight(db);
+	vector<User> users = flight.presentPassengers();
+	for (User user : users) {
+		cout << "Passenger Information:" << endl;
+		cout << "-------------------------" << endl;
+		cout << "Seat Number: " << user.getSeatNumber() << endl;
+		cout << "Name: " << user.getFirstName() << " " << user.getLastName() << endl;
+		cout << "Flight Number: " << flight.getFlightNumber() << endl;
+		cout << "Flight from: " << flight.getDepartureCity() << "to " << flight.getDestinationCity() << endl;
+		cout << endl;
+	}
+}
 
+void userTicketInfomation(Database& db)
+{
+	presentFlightsSchedule(db);
+	Flight flight = chooseFlight(db);
+	User specificUser = getUserData();
+	int userId = specificUser.getIdNumber();
+	vector<User> users = flight.presentPassengers();
+	bool userFound = false;
+	for (User user : users) {
+		if (userId == user.getIdNumber()) {
+			userFound = true;
+			cout << "Passenger Information:" << endl;
+			cout << "-------------------------" << endl;
+			cout << "Name: " << user.getFirstName() << " " << user.getLastName() << endl;
+			cout << "Flight Number: " << flight.getFlightNumber() << endl;
+			cout << "Flight from: " << flight.getDepartureCity() << "to " << flight.getDestinationCity() << endl;
+			cout << "Seat Number: " << user.getSeatNumber() << endl;
+			cout << endl;
+		}
+	}
+	if (userFound == false) {
+		cout << "Passenger not found." << endl;
+	}
+}
+
+void displayFlightInfo(Database& db) {
+	presentFlightsSchedule(db);
+	Flight flight = chooseFlight(db);
+	flight.display();
 }
 
 

@@ -11,6 +11,8 @@ namespace AirlineReservationSystem {
 		Flight() = default;
 		Flight(const std::string& destinationCity, const std::string& departureCity, int flightNumber, int seatsAmount);
 
+		void display() const;
+
 		//Getters and setters
 		const std::string& getDestinationCity() const;
 
@@ -18,22 +20,17 @@ namespace AirlineReservationSystem {
 
 		int getFlightNumber() const;
 
-		vector<int>& getFreeSeats();
+		std::vector<int>& getFreeSeats();
 
-		void reserveSeat(User& user) {
-			users.push_back(user);
-			int seatNumber = user.getSeatNumber();
-			freeSeats.erase(std::remove(freeSeats.begin(), freeSeats.end(), seatNumber), freeSeats.end());
-		}
+		void reserveSeat(User& user);			
+
+		std::vector<User>& presentPassengers();
+
 	private:
 		std::string mDestinationCity;
 		std::string mDepartureCity;
-		std::vector<User> users;
-		std::vector<int> freeSeats;
+		std::vector<User> mUsers;
+		std::vector<int> mFreeSeats;
 		int mFlightNumber = -1;
-		time_t mDepartureTime;
-		//difftime mFlightDuration;
-		int differenceInTimeWithDestination = 0;
-		bool mOnTime = true;
 	};
 }

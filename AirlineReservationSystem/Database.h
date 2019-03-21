@@ -8,12 +8,12 @@ namespace AirlineReservationSystem {
 
 	class Database
 	{
-	public:
-		Flight& addFlight(Flight flight) { mFlights.push_back(flight); }
-		Flight& getFlight(int flightNumber){ }
-		vector<Flight>& getAllFlight() { return mFlights; }
+		public:
+			Flight& addFlight(Flight flight);
+			Flight& getFlight(int flightNumber);
+			std::vector<Flight>& getAllFlight();
 
-	private:
-		std::vector<Flight> mFlights;
+		private:
+			std::vector<Flight> mFlights;
 	};
 }
