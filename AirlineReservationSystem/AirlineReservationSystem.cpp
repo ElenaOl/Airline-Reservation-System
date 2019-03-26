@@ -15,7 +15,11 @@
 //
 //6. Exit the program
 
+#include "stdafx.h"
 #include <iostream>
+#include "Database.h"
+#include "User.h"
+#include "Flight.h"
 #include "Database.h"
 
 using namespace std;
@@ -36,7 +40,7 @@ int main()
 
 	Flight f1("Seattle", "Boston", 1, 60);
 	Flight f2("New York", "Mexico City", 2, 30);
-	Flight f3("Seattle", "Tel Aviv", 1, 50);
+	Flight f3("Seattle", "Tel Aviv", 3, 50);
 
 	airlineDB.addFlight(f1);
 	airlineDB.addFlight(f2);
@@ -119,8 +123,8 @@ User getUserData() {
 	cout << "Your Id number? ";
 	cin >> userId;
 	
-	User user = new User(firstName, lastName, userId);
-	return user;
+	User* user = new User(firstName, lastName, userId);
+	return *user;
 }
 void reserveSeat(Database& db)
 {

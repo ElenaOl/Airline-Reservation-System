@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "Flight.h"
 
+
 using namespace std;
 
 namespace AirlineReservationSystem {
@@ -45,9 +46,6 @@ namespace AirlineReservationSystem {
 
 	void Flight::display() const
 	{
-		cout << "Flight from: " << getDestinationCity() << "to " << getDepartureCity() << endl;
-		cout << "-------------------------" << endl;
-		cout << "Flight Number: " << getFlightNumber() << endl;
-		cout << endl;
+		cout << "#" << getFlightNumber() << " From " << getDestinationCity() << " To " << getDepartureCity() << endl;
 	}
 }

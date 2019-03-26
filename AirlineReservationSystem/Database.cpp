@@ -8,7 +8,7 @@ using namespace std;
 
 namespace AirlineReservationSystem {
 
-	Flight& Database::addFlight(Flight flight) { mFlights.push_back(flight); }
+	void Database::addFlight(Flight& flight) { mFlights.push_back(flight); }
 
 	Flight& Database::getFlight(int flightNumber) { 
 		for (auto& flight : mFlights) {

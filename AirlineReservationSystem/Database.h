@@ -9,7 +9,7 @@ namespace AirlineReservationSystem {
 	class Database
 	{
 		public:
-			Flight& addFlight(Flight flight);
+			void addFlight(Flight& flight);
 			Flight& getFlight(int flightNumber);
 			std::vector<Flight>& getAllFlight();
 
