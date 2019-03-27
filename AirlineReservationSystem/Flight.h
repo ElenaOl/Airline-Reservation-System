@@ -24,7 +24,7 @@ namespace AirlineReservationSystem {
 
 		void reserveSeat(User& user);			
 
-		std::vector<User>& presentPassengers();
+		std::vector<User>& getPassengers();
 
 	private:
 		std::string mDestinationCity;

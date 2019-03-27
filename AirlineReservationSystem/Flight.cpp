@@ -40,7 +40,7 @@ namespace AirlineReservationSystem {
 		mFreeSeats.erase(std::remove(mFreeSeats.begin(), mFreeSeats.end(), seatNumber), mFreeSeats.end());
 	}
 
-	vector<User>& Flight::presentPassengers() {
+	vector<User>& Flight::getPassengers() {
 		return mUsers;
 	}
 

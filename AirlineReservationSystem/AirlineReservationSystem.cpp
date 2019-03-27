@@ -148,7 +148,7 @@ void displayPassengerInfo(Database& db) {
 	
 	Flight& flight = chooseFlight(db);
 
-	vector<User>& users = flight.presentPassengers();
+	vector<User>& users = flight.getPassengers();
 	for (User& user : users) {
 		cout << "Passenger Information:" << endl;
 		cout << "-------------------------" << endl;
@@ -168,7 +168,7 @@ void userTicketInfomation(Database& db)
 	cout << "Your Id number? ";
 	cin >> userId;
 
-	vector<User>& users = flight.presentPassengers();
+	vector<User>& users = flight.getPassengers();
 	bool userFound = false;
 	for (User& user : users) {
 		if (userId == user.getIdNumber()) {
@@ -190,6 +190,10 @@ void userTicketInfomation(Database& db)
 void displayFlightInfo(Database& db) {
 	Flight& flight = chooseFlight(db);
 	flight.display();
+	vector<int>& freeSeats = flight.getFreeSeats();
+	vector<User>& seatsBooked = flight.getPassengers();
+	cout << "Free seats left: " << freeSeats.size() << endl;
+	cout << "Seats booked: " << seatsBooked.size() << endl;
 }
 
 
